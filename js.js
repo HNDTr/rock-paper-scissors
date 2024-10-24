@@ -84,9 +84,9 @@ function playRound(humanChoice, computerChoice){
 */
 
 function playGame(){
-    let numRounds = 5
-    humanScore = 0
-    computerScore = 0
+    let numRounds = 5;
+    humanScore = 0;
+    computerScore = 0;
 
 
     while (numRounds > 0){ 
@@ -95,11 +95,11 @@ function playGame(){
     }
 
     if (humanScore > computerScore){
-        console.log("You're the winner!")
-        console.log(`You scores ${humanScore} out of 5`)
+        console.log("You're the winner!");
+        console.log(`You scores ${humanScore} out of 5`);
     } else {
-        console.log("Try again next time!")
-        console.log(`You scores ${humanScore} out of 5`)
+        console.log("Try again next time!");
+        console.log(`You scores ${humanScore} out of 5`);
     }
     
 }
