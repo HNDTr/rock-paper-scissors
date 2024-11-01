@@ -4,9 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="js.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+    <div class="container">
+    <div class="scores">
+        <h2 class="yourScores">Your scores: 0</h2>
+        <h2 class="computerScores">Computer scores: 0</h2>
+    </div>
+    <div class="images">
+        <div class="imgContainer">
+            <h1 class="yourName">You</h1>
+            <img class="yourChoice" src="images/paper.png" alt="">
+        </div>
+        <div class="imgContainer">
+            <h1 class="computerName">Computer</h1>
+            <img class="computerChoice" src="images/rock.png" alt="">
+        </div>
+    </div>
+    <div class="message">
+        <h1 class="gameMessage"></h1>
+    </div>
+    <div class="mainContainer">
+    <div class="choiceContainer">
+        <button id="rockChoiceButton">Rock</button>
+        <button id="rockChoiceButton">Paper</button>
+        <button id="rockChoiceButton">Scissors</button>
+    </div>
+    </div>
+    </div>
+    <script src="js.js"></script>
 </body>
 </html>
+

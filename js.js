@@ -2,14 +2,6 @@
 let humanScore = 0;
 let computerScore = 0;
 
-/*
-    getComputerChoice
-        generate a random number between 0 - 3
-            if 0 return "rock"
-            if 1 return "paper"
-            if 2 return "scissors"
-*/
-
 function getComputerChoice(){
     randomNumber = Math.floor(Math.random() * 3);
     switch(randomNumber){
@@ -24,82 +16,77 @@ function getComputerChoice(){
     }
 }
 
-/*
-    getHumanChoice
-        ask the user what they choose 
-        if they choose something invalid then prompt them again 
-        otherwise return either scissors, rock, paper
-*/
-function getHumanChoice(){
-    let userChoice = prompt("What's your move? (scissors, rock, paper)").toLowerCase();
-
-    while (!(userChoice === "scissors" || userChoice === "rock" || userChoice === "paper")){
-        alert("Invalid input");
-        userChoice = prompt("What's your move? (scissors, rock, paper)").toLowerCase();
-    }
+function getHumanChoice(userChoice){
     return userChoice;
 }
 
-/*
-    playRound 
-        take in two choices (one from player and one generate from computer)
-        compare the two results 
-        if one win display or tie
-        increment score accordingly 
- */
+
 
 function playRound(humanChoice, computerChoice){
-    console.log(`Human Choice is ${humanChoice}`);
-    console.log(`Computer Choice is ${computerChoice}`);
-    if (humanChoice === computerChoice){
-        console.log("It's a tie!");
+    let gameText = document.querySelector('.gameMessage');
+    let yourScores = document.querySelector('.yourScores');
+    let computerScores = document.querySelector('.computerScores');
+    let yourImageChoice = document.querySelector('.yourChoice');
+    let computerImageChoice = document.querySelector('.computerChoice');
+    yourScores.textContent = 'Your scores: ';
+    computerScores.textContent = 'Computer scores: ';
+    gameText.innerHTML = ''; // Clear previous message
+    yourImageChoice.setAttribute('src', `images/${humanChoice}.png`);
+    computerImageChoice.setAttribute('src', `images/${computerChoice}.png`);
+
+    if (humanChoice === computerChoice) {
+        gameText.innerHTML += "It's a tie!";
+    } else if (
+        (humanChoice === 'rock' && computerChoice === 'scissors') ||
+        (humanChoice === 'paper' && computerChoice === 'rock') ||
+        (humanChoice === 'scissors' && computerChoice === 'paper')
+    ) {
+        gameText.innerHTML += `You win! ${humanChoice} beats ${computerChoice}`;
+        humanScore++;
     } else {
-        if (humanChoice === 'rock' && computerChoice === 'scissors'){
-            humanScore++;
-            console.log("You win! Rock beats Scissors");
-        } else if (humanChoice === 'paper' && computerChoice === 'rock'){
-            humanScore++;
-            console.log("You win! Paper beats Rock");
-        } else if (humanChoice === 'scissors' && computerChoice === 'paper'){
-            humanScore++;
-            console.log("You win! Scissors beats Paper");
-        } else if (humanChoice === 'rock' && computerChoice === 'paper'){
-            computerScore++;
-            console.log("You lose! Paper beats Rock");
-        } else if (humanChoice === 'paper' && computerChoice === 'scissors'){
-            computerScore++;
-            console.log("You lose! Scissors beats Paper");
+        gameText.innerHTML += `You lose! ${computerChoice} beats ${humanChoice}`;
+        computerScore++;
+    }
+    yourScores.textContent += humanScore;
+    computerScores.textContent += computerScore;
+
+    if (humanScore === 5 || computerScore === 5){
+        if (humanScore > computerScore){
+            gameText.innerHTML += (`<br> <p style='color: red;'> You're the winner! <p>`);
         } else {
-            computerScore++;
-            console.log("You lose! Rock beats Scissors");
+            gameText.innerHTML += ("<br> <p style='color: red;'> Try again next time! <p>");
         }
+        humanScore = 0;
+        computerScore = 0;
     }
+
 }
 
-/*
-    playRound
-        keep track of number of rounds
-        while the number of rounds if less than 5 continue to play
-
-*/
-
-function playGame(){
-    let numRounds = 5;
-    humanScore = 0;
-    computerScore = 0;
 
 
-    while (numRounds > 0){ 
-        playRound(getHumanChoice(), getComputerChoice());
-        numRounds--;
+let choiceContainer = document.querySelector('.choiceContainer');
+
+choiceContainer.addEventListener('click', (e) => {
+    let target = e.target;
+    let choice = target.textContent.toLowerCase();
+
+    switch(target.id) {
+        case 'rockChoiceButton':
+        case 'paperChoiceButton':
+        case 'scissorsChoiceButton':  
+        playRound(getHumanChoice(choice), getComputerChoice());
+        break;
     }
+})
 
-    if (humanScore > computerScore){
-        console.log("You're the winner!");
-        console.log(`You scores ${humanScore} out of 5`);
-    } else {
-        console.log("Try again next time!");
-        console.log(`You scores ${humanScore} out of 5`);
-    }
-    
-}
+let choiceButton = document.querySelectorAll('button');
+
+choiceButton.forEach((button) => {
+    button.addEventListener('mouseenter', () => {
+        button.setAttribute('style', 'background-color: green; color: white; cursor: pointer;')
+    });
+    button.addEventListener('mouseleave', () => {
+        button.setAttribute('style', 'color: black;')
+    })
+})
+
